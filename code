@@ -1,0 +1,746 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZXMGVU04
+*&---------------------------------------------------------------------*
+**
+*Tabelas Internas
+DATA:tg_zmmtb0373 TYPE TABLE OF zmmtb0373,
+     tg_fieldcat  TYPE lvc_t_fcat,
+     tg_comp      TYPE cl_abap_structdescr=>component_table.
+
+*Estruturas
+DATA:ls_zmmtb0373 TYPE zmmtb0373,
+     ls_fieldcat  LIKE LINE OF tg_fieldcat,
+     ls_comp      LIKE LINE OF tg_comp.
+
+*Variáveis
+DATA:vg_feitombew  TYPE c,
+     vg_feitomara  TYPE c,
+     vg_feitomara1 TYPE c,
+     vg_feitomakt  TYPE c,
+     vg_feitomarc  TYPE c,
+     vg_feitomard  TYPE c,
+     vg_feitomfhm  TYPE c,
+     vg_feitompgd  TYPE c,
+     vg_feitompop  TYPE c,
+     vg_feitomprw  TYPE c,
+     vg_feitomveg  TYPE c,
+     vg_feitomveu  TYPE c,
+     vg_feitomarm  TYPE c,
+     vg_feitomean  TYPE c,
+     vg_feitomlgn  TYPE c,
+     vg_feitomvke  TYPE c,
+     vg_feitomlgt  TYPE c,
+     vg_oref       TYPE REF TO cx_root,
+     vg_text       TYPE string,
+     vg_tabcamp    TYPE string.
+
+*Objetos
+DATA:d_reference   TYPE REF TO data,
+     d_struct_type TYPE REF TO cl_abap_structdescr, "Structure
+     d_table_type  TYPE REF TO cl_abap_tabledescr."Table type
+
+FIELD-SYMBOLS:<fl_ueb>    TYPE ANY,
+              <fl_field>  TYPE ANY,
+              <fl_fieldt> TYPE ANY,
+              <fl_estr>   TYPE ANY,
+              <table>     TYPE STANDARD TABLE.
+
+ASSIGN d_reference TO <fl_estr>.
+
+IMPORT tg_zmmtb0373 TO tg_zmmtb0373 FROM MEMORY ID 'ZMDG373'.
+
+TRY.
+
+    DELETE tg_zmmtb0373 WHERE estrutura_idoc NE f_cust_segment-segnam.
+
+    LOOP AT tg_zmmtb0373 INTO ls_zmmtb0373.
+
+      UNASSIGN <fl_fieldt>.
+
+      CASE f_cust_segment-segnam.
+
+        WHEN 'E1MBEWM'.
+
+          IMPORT vg_feitombew TO vg_feitombew FROM MEMORY ID 'ZE1MBEWM'.
+
+          IF f_mbew_ueb-matnr IS NOT INITIAL AND f_mbew_ueb-bwkey  IS NOT INITIAL.
+*          AND vg_feitombew IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                   FROM (ls_zmmtb0373-tabela)
+                   INTO TABLE <table>
+                   WHERE matnr = f_mbew_ueb-matnr
+                     AND bwkey = f_mbew_ueb-bwkey.
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_mbew_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+          ENDIF.
+
+        WHEN 'E1MARA1'.
+
+          IMPORT vg_feitomara TO vg_feitomara FROM MEMORY ID 'ZE1MARA1'.
+          IF f_mara_ueb-matnr IS NOT INITIAL. " AND vg_feitomara IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                   FROM (ls_zmmtb0373-tabela)
+                   INTO TABLE <table>
+                  WHERE matnr = f_mara_ueb-matnr.
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_mara_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+        WHEN 'E1MARAM'.
+
+          IMPORT vg_feitomara1 TO vg_feitomara FROM MEMORY ID 'ZE1MARAM'.
+          IF f_mara_ueb-matnr IS NOT INITIAL." AND vg_feitomara IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                   FROM (ls_zmmtb0373-tabela)
+                   INTO TABLE <table>
+                  WHERE matnr = f_mara_ueb-matnr.
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_mara_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+        WHEN 'E1MAKTM'.
+
+          IMPORT vg_feitomakt TO vg_feitomakt FROM MEMORY ID 'ZE1MAKTM'.
+          IF f_makt_ueb-matnr IS NOT INITIAL." AND vg_feitomakt IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                   FROM (ls_zmmtb0373-tabela)
+                   INTO TABLE <table>
+                  WHERE matnr = f_makt_ueb-matnr.
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_makt_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+          ENDIF.
+
+        WHEN 'E1MARCM'.
+
+          IMPORT vg_feitomarc TO vg_feitomarc FROM MEMORY ID 'ZE1MARCM'.
+          IF f_marc_ueb-matnr IS NOT INITIAL AND f_marc_ueb-werks IS NOT INITIAL.
+            "AND vg_feitomarc IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+*------------------------------------------------------------------------------------------
+            SELECT (ls_zmmtb0373-campo)
+                     FROM (ls_zmmtb0373-tabela)
+                     INTO TABLE <table>
+                    WHERE matnr = f_marc_ueb-matnr
+                      AND werks = f_marc_ueb-werks.
+            IF sy-subrc = 0.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_marc_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+        WHEN 'E1MARD'.
+
+          IMPORT vg_feitomard TO vg_feitomard FROM MEMORY ID 'ZE1MARD'.
+          IF f_mard_ueb-matnr IS NOT INITIAL AND f_mard_ueb-werks IS NOT INITIAL.
+            "AND vg_feitomard IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                    FROM (ls_zmmtb0373-tabela)
+                    INTO TABLE <table>
+                   WHERE matnr  = f_mard_ueb-matnr
+                     AND werkrs = f_mard_ueb-werks.
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_mard_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+        WHEN 'E1MFHMM'.
+
+          IMPORT vg_feitomfhm TO vg_feitomfhm FROM MEMORY ID 'ZE1MFHMM'.
+          IF f_mfhm_ueb-matnr IS NOT INITIAL AND f_mfhm_ueb-werks IS NOT INITIAL.
+            "AND vg_feitomfhm IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                    FROM (ls_zmmtb0373-tabela)
+                    INTO TABLE <table>
+                   WHERE matnr  = f_mfhm_ueb-matnr
+                     AND werkrs = f_mfhm_ueb-werks.
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_mfhm_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+        WHEN 'E1MPGDM'.
+
+          IMPORT vg_feitompgd TO vg_feitompgd FROM MEMORY ID 'ZE1MPGDM'.
+          IF f_mpgd_ueb-matnr IS NOT INITIAL AND f_mpgd_ueb-werks IS NOT INITIAL.
+            "AND vg_feitompgd IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                    FROM (ls_zmmtb0373-tabela)
+                    INTO TABLE <table>
+                   WHERE matnr  = f_mpgd_ueb-matnr
+                     AND werkrs = f_mpgd_ueb-werks.
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_mpgd_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+        WHEN 'E1MPOPM'.
+
+          IMPORT vg_feitompop TO vg_feitompop FROM MEMORY ID 'ZE1MPOPM'.
+          IF f_mpop_ueb-matnr IS NOT INITIAL AND f_mpop_ueb-werks IS NOT INITIAL.
+            "AND vg_feitompop IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                    FROM (ls_zmmtb0373-tabela)
+                    INTO TABLE <table>
+                   WHERE matnr  = f_mpop_ueb-matnr
+                     AND werkrs = f_mpop_ueb-werks.
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_mpop_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+        WHEN 'E1MPRWM'.
+
+          IMPORT vg_feitomprw TO vg_feitomprw FROM MEMORY ID 'ZE1MPRWM'.
+          IF f_mprw_ueb-matnr IS NOT INITIAL AND f_mprw_ueb-werks IS NOT INITIAL.
+            "AND vg_feitomprw IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                    FROM (ls_zmmtb0373-tabela)
+                    INTO TABLE <table>
+                   WHERE matnr  = f_mprw_ueb-matnr
+                     AND werkrs = f_mprw_ueb-werks.
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_mprw_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+        WHEN 'E1MVEGM'.
+
+          IMPORT vg_feitomveg TO vg_feitomveg FROM MEMORY ID 'ZE1MVEGM'.
+          IF f_mveg_ueb-matnr IS NOT INITIAL AND f_mveg_ueb-werks IS NOT INITIAL.
+            "AND vg_feitomveg IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                   FROM (ls_zmmtb0373-tabela)
+                   INTO TABLE <table>
+                  WHERE matnr  = f_mveg_ueb-matnr
+                    AND werkrs = f_mveg_ueb-werks.
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_mveg_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+        WHEN 'E1MVEUM'.
+
+          IMPORT vg_feitomveu TO vg_feitomveu FROM MEMORY ID 'ZE1MVEUM'.
+          IF f_mveu_ueb-matnr IS NOT INITIAL AND f_mveu_ueb-werks IS NOT INITIAL.
+            "AND vg_feitomveu IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                   FROM (ls_zmmtb0373-tabela)
+                   INTO TABLE <table>
+                  WHERE matnr  = f_mveu_ueb-matnr
+                    AND werkrs = f_mveu_ueb-werks.
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_mveu_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+        WHEN 'E1MARMM'.
+
+          IMPORT vg_feitomarm TO vg_feitomarm FROM MEMORY ID 'ZE1MARMM'.
+          IF f_marm_ueb-matnr IS NOT INITIAL AND f_marm_ueb-meinh IS NOT INITIAL.
+            "AND vg_feitomarm IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                   FROM (ls_zmmtb0373-tabela)
+                   INTO TABLE <table>
+                  WHERE matnr  = f_marm_ueb-matnr
+                    AND meinh = f_marm_ueb-meinh.
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_marm_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+        WHEN 'E1MEANM'.
+
+          IMPORT vg_feitomean TO vg_feitomean FROM MEMORY ID 'ZE1MEANM'.
+          IF f_mean_ueb-matnr IS NOT INITIAL AND f_mean_ueb-meinh IS NOT INITIAL.
+            "AND vg_feitomean IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                   FROM (ls_zmmtb0373-tabela)
+                   INTO TABLE <table>
+                  WHERE matnr = f_mean_ueb-matnr
+                    AND meinh = f_mean_ueb-meinh.
+
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_mean_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+        WHEN 'E1MLGNM'.
+
+          IMPORT vg_feitomlgn TO vg_feitomlgn FROM MEMORY ID 'ZE1MLGNM'.
+          IF f_mlgn_ueb-matnr IS NOT INITIAL AND f_mlgn_ueb-lgnum IS NOT INITIAL.
+            "AND vg_feitomlgn IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                   FROM (ls_zmmtb0373-tabela)
+                   INTO TABLE <table>
+                  WHERE matnr  = f_mlgn_ueb-matnr
+                    AND lgnum = f_mlgn_ueb-lgnum.
+
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_mlgn_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+        WHEN 'E1MVKEM'.
+
+          IMPORT vg_feitomvke TO vg_feitomvke FROM MEMORY ID 'ZE1MVKEM'.
+          IF f_mvke_ueb-matnr IS NOT INITIAL AND f_mvke_ueb-vkorg IS NOT INITIAL
+          AND f_mvke_ueb-vtweg IS NOT INITIAL." AND vg_feitomvke IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                    FROM (ls_zmmtb0373-tabela)
+                    INTO TABLE <table>
+                   WHERE matnr  = f_mvke_ueb-matnr
+                     AND vkorg = f_mvke_ueb-vkorg
+                     AND vtweg = f_mvke_ueb-vtweg.
+
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_mvke_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+        WHEN 'E1MLGTM'.
+
+          IMPORT vg_feitomlgt TO vg_feitomlgt FROM MEMORY ID 'ZE1MLGTM'.
+          IF f_mlgt_ueb-matnr IS NOT INITIAL AND f_mlgt_ueb-lgnum IS NOT INITIAL
+          AND f_mlgt_ueb-lgtyp IS NOT INITIAL." AND vg_feitomlgt IS INITIAL.
+
+*Monta Tab dinâmica
+            CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
+            ls_comp-name = ls_zmmtb0373-campo.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            APPEND ls_comp TO tg_comp.
+            d_struct_type = cl_abap_structdescr=>create( tg_comp ).
+            d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
+*           Cria Tabela Dinamica
+            CREATE DATA d_reference TYPE HANDLE d_table_type.
+            UNASSIGN <table>.
+            ASSIGN d_reference->* TO <table>.
+
+            SELECT (ls_zmmtb0373-campo)
+                   FROM (ls_zmmtb0373-tabela)
+                   INTO TABLE <table>
+                  WHERE matnr = f_mlgt_ueb-matnr
+                    AND lgnum = f_mlgt_ueb-lgnum
+                    AND lgtyp = f_mlgt_ueb-lgtyp.
+
+            IF sy-subrc = 0.
+              UNASSIGN <fl_estr>.
+              READ TABLE <table> ASSIGNING <fl_estr> INDEX 1.
+              IF <fl_estr> IS ASSIGNED.
+                ASSIGN f_mlgt_ueb TO <fl_ueb>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_ueb> TO <fl_field>.
+                ASSIGN COMPONENT ls_zmmtb0373-campo OF STRUCTURE <fl_estr> TO <fl_fieldt>.
+                IF <fl_fieldt> IS ASSIGNED AND <fl_field> IS ASSIGNED.
+                  IF <fl_fieldt> NE <fl_field>.
+                    <fl_field> = <fl_fieldt>.
+                  ENDIF.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+
+          ENDIF.
+
+      ENDCASE.
+    ENDLOOP.
+
+  CATCH cx_root INTO vg_oref.
+    vg_text = vg_oref->get_text( ).
+
+ENDTRY.
