@@ -1,0 +1,24 @@
+DATA:  struct_type TYPE REF TO cl_abap_structdescr, "Structure
+            table_type TYPE REF TO cl_abap_tabledescr,"Table type
+            dataref TYPE REF TO data.                 "Dynamic data
+*-Component Table and Work area
+DATA:  comp_tab TYPE cl_abap_structdescr=>component_table,
+       comp_wa   LIKE LINE OF comp_tab.
+
+FIELD-SYMBOLS: <t_table> TYPE STANDARD TABLE,
+               <s_table> TYPE ANY.
+
+comp_wa-name = 'VBELN'.
+comp_wa-type ?= cl_abap_datadescr=>describe_by_name( 'CHAR10' ).
+APPEND comp_wa TO comp_tab.
+
+*Create Dynamic table using component table
+struct_type = cl_abap_structdescr=>create( comp_tab ).
+table_type  = cl_abap_tabledescr=>create( p_line_type = struct_type ).
+
+*Create  Dynamic Internal table and work area
+CREATE DATA dataref TYPE HANDLE table_type.
+ASSIGN dataref->* TO <t_table>.   "Dynamic table
+CREATE DATA dataref TYPE HANDLE struct_type.
+ASSIGN dataref->* TO <s_table>. "Dyanmic Structure
+break-point.
