@@ -69,7 +69,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -107,7 +109,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -145,7 +149,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -183,7 +189,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -221,7 +229,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -260,7 +270,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -300,7 +312,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -340,7 +354,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -380,7 +396,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -420,7 +438,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -460,7 +480,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -500,7 +522,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -540,7 +564,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -580,7 +606,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -621,7 +649,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -662,7 +692,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
@@ -704,7 +736,9 @@ TRY.
 *Monta Tab dinâmica
             CONCATENATE ls_zmmtb0373-tabela ls_zmmtb0373-campo INTO vg_tabcamp SEPARATED BY '-'.
             ls_comp-name = ls_zmmtb0373-campo.
-            ls_comp-type ?= cl_abap_datadescr=>describe_by_data( vg_tabcamp ).
+            CLEAR ls_comp-type.
+            ls_comp-type ?= cl_abap_datadescr=>describe_by_name( vg_tabcamp ).
+            CLEAR: tg_comp[], d_struct_type, d_table_type.
             APPEND ls_comp TO tg_comp.
             d_struct_type = cl_abap_structdescr=>create( tg_comp ).
             d_table_type  = cl_abap_tabledescr=>create( p_line_type = d_struct_type ).
